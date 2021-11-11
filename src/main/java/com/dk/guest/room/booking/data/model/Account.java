@@ -1,4 +1,4 @@
-package com.dk.guest.room.booking;
+package com.dk.guest.room.booking.data.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
