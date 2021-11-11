@@ -1,4 +1,4 @@
-package com.dk.guest.room.booking;
+package com.dk.guest.room.booking.controller;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.dk.guest.room.booking.data.model.Room;
+import com.dk.guest.room.booking.data.repository.RoomRepository;
 
 @RestController
 public class RoomController {
