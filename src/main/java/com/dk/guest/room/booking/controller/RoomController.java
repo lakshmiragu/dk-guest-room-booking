@@ -1,11 +1,13 @@
 package com.dk.guest.room.booking.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.dk.guest.room.booking.data.model.Account;
@@ -108,6 +112,20 @@ public class RoomController {
 		}
 		Room room = optional.get();
 		roomRepository.delete(room);
+	}
+
+	@Value("${file.upload-dir}")
+	public String fileUploadFolder;
+
+	@PostMapping("/rooms/{id}/uploadphoto")
+	public void uploadFile(@RequestParam MultipartFile file, @PathVariable Long id)
+			throws IllegalStateException, IOException {
+
+		File newFile = new File(fileUploadFolder + id + ".jpg");
+
+		file.transferTo(newFile);
+		System.out.println(newFile.getAbsolutePath());
+
 	}
 
 }
