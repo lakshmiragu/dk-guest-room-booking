@@ -27,7 +27,7 @@ public class BookingController {
 	AccountRepository accountRepository;
 
 	@GetMapping("/bookings/{id}")
-	public Booking viewBookingRoom(@PathVariable Integer id) throws IOException {
+	public Booking viewBookingRoom(@PathVariable Long id) throws IOException {
 		System.out.println("Reading the Booking Room id = " + id);
 
 		Optional<Booking> optional = bookingRepository.findById(id);

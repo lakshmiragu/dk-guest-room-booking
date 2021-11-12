@@ -18,33 +18,37 @@ import com.dk.guest.room.booking.data.repository.AccountRepository;
 
 
 @RestController
-public class AccountController {
+public class OwnerAccountController {
 	
 	@Autowired
 	AccountRepository accountRepository;
 	
-	@GetMapping("/accounts/{id}")
-	public Account viewAccount(@PathVariable Integer id) throws IOException{
+	@GetMapping("/owners/{id}")
+	public Account viewAccount(@PathVariable Long id) throws IOException{
 		System.out.println("Reading the Account id = " + id);
 		
-		Optional<Account> optional = accountRepository.findById(id);
+		Optional<Account> optional = accountRepository.findByAccountIdAndType(id, "owner");
 		if(optional.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Account doesn't exist");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Owner doesn't exist");
 		}
 		return optional.get();
 	}
 	
-	@PostMapping("/accounts")
+	@PostMapping("/owners")
 	public Account createAccount(@RequestBody Account account) throws IOException{
 		System.out.println("***Creating the Account***");
 		if(account.getAccountId() != null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Account Id should be empty to create an account");
 		}
+		
+		if(account.getType() == null || !account.getType().equals("owner")) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Invalid type is given");
+		}
 		accountRepository.save(account);
 		return account;
 	}
 	
-	@PutMapping("/accounts")
+	@PutMapping("/owners")
 	public Account updateAccount(@RequestBody Account account) throws IOException{
 		System.out.println("***updating the Account***");
 		if(account.getAccountId() == null) {

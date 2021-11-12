@@ -1,6 +1,8 @@
 package com.dk.guest.room.booking.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +35,24 @@ public class RoomController {
 	@Autowired
 	BookingRepository bookingRepository;
 
-	@GetMapping("/rooms/{id}/availablity")
-	public Iterable<Booking> viewRoomAvailability(@PathVariable Integer id) throws IOException {
+	@GetMapping("/rooms/{id}/datesbooked")
+	public ArrayList<LocalDate> viewRoomAvailability(@PathVariable Long id) throws IOException {
 		System.out.println("Reading availablity of the Room id = " + id);
 		Iterable<Booking> bookings = bookingRepository.findAllByRoomId(id);
 
-		return bookings;
+		ArrayList<LocalDate> dateBooked = new ArrayList<>();
+
+		for (Booking b : bookings) {
+
+			dateBooked.add(b.getDateOfBooking());
+
+		}
+
+		return dateBooked;
 	}
 
 	@GetMapping("/rooms/{id}")
-	public Room viewRoom(@PathVariable Integer id) throws IOException {
+	public Room viewRoom(@PathVariable Long id) throws IOException {
 		System.out.println("Reading the Room id = " + id);
 
 		Optional<Room> optional = roomRepository.findById(id);
@@ -89,7 +99,7 @@ public class RoomController {
 	}
 
 	@DeleteMapping("/rooms/{id}")
-	public void deleteRoom(@PathVariable Integer id) throws IOException {
+	public void deleteRoom(@PathVariable Long id) throws IOException {
 		System.out.println("Deleting the Room id = " + id);
 
 		Optional<Room> optional = roomRepository.findById(id);
