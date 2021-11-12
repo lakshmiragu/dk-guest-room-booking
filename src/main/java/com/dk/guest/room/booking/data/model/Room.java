@@ -11,7 +11,7 @@ public class Room {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Integer roomId;
-	String ownerId;
+	Integer ownerId;
 	String name;
 	String floorSize;
 	String numberOfBeds;
@@ -29,11 +29,11 @@ public class Room {
 		this.roomId = roomId;
 	}
 
-	public String getOwnerId() {
+	public Integer getOwnerId() {
 		return ownerId;
 	}
 
-	public void setOwnerId(String ownerId) {
+	public void setOwnerId(Integer ownerId) {
 		this.ownerId = ownerId;
 	}
 

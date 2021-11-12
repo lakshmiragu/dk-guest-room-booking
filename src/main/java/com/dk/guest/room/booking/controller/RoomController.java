@@ -14,54 +14,87 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.dk.guest.room.booking.data.model.Account;
+import com.dk.guest.room.booking.data.model.Booking;
 import com.dk.guest.room.booking.data.model.Room;
+import com.dk.guest.room.booking.data.repository.AccountRepository;
+import com.dk.guest.room.booking.data.repository.BookingRepository;
 import com.dk.guest.room.booking.data.repository.RoomRepository;
 
 @RestController
 public class RoomController {
-	
+
 	@Autowired
 	RoomRepository roomRepository;
-	
-	
+
+	@Autowired
+	AccountRepository accountRepository;
+
+	@Autowired
+	BookingRepository bookingRepository;
+
+	@GetMapping("/rooms/{id}/availablity")
+	public Iterable<Booking> viewRoomAvailability(@PathVariable Integer id) throws IOException {
+		System.out.println("Reading availablity of the Room id = " + id);
+		Iterable<Booking> bookings = bookingRepository.findAllByRoomId(id);
+
+		return bookings;
+	}
+
 	@GetMapping("/rooms/{id}")
-	public Room viewRoom(@PathVariable Integer id) throws IOException{
+	public Room viewRoom(@PathVariable Integer id) throws IOException {
 		System.out.println("Reading the Room id = " + id);
-		
+
 		Optional<Room> optional = roomRepository.findById(id);
-		if(optional.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Room doesn't exist");
+		if (optional.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room doesn't exist");
 		}
 		return optional.get();
 	}
-	
+
+	@GetMapping("/rooms")
+	public Iterable<Room> viewAllRooms() throws IOException {
+		System.out.println("Reading all rooms");
+		return roomRepository.findAll();
+	}
+
 	@PostMapping("/rooms")
-	public Room createRoom(@RequestBody Room room) throws IOException{
+	public Room createRoom(@RequestBody Room room) throws IOException {
 		System.out.println("***Creating the room***");
-		if(room.getRoomId() != null) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Room Id should be empty to create a room");
+		if (room.getRoomId() != null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room Id should be empty to create a room");
 		}
+		if (room.getOwnerId() == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Owner Id should be provided to create a room ");
+		}
+
+		Optional<Account> optional = accountRepository.findByAccountIdAndType(room.getOwnerId(), "owner");
+		if (optional.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Owner doesn't exist");
+		}
+
 		roomRepository.save(room);
 		return room;
 	}
-	
+
 	@PutMapping("/rooms")
-	public Room updateRoom(@RequestBody Room room) throws IOException{
+	public Room updateRoom(@RequestBody Room room) throws IOException {
 		System.out.println("***updating the room***");
-		if(room.getRoomId() == null) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Room Id should not be empty to update an existing room");
+		if (room.getRoomId() == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					"Room Id should not be empty to update an existing room");
 		}
 		roomRepository.save(room);
 		return room;
 	}
-	
+
 	@DeleteMapping("/rooms/{id}")
-	public void deleteRoom(@PathVariable Integer id) throws IOException{
+	public void deleteRoom(@PathVariable Integer id) throws IOException {
 		System.out.println("Deleting the Room id = " + id);
-		
+
 		Optional<Room> optional = roomRepository.findById(id);
-		if(optional.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Room doesn't exist");
+		if (optional.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room doesn't exist");
 		}
 		Room room = optional.get();
 		roomRepository.delete(room);
