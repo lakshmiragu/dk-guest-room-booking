@@ -4,8 +4,10 @@ import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -13,37 +15,46 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Booking {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	Integer bookingId;
+    @GeneratedValue(generator = "sequence-generator")
+    @GenericGenerator(
+      name = "sequence-generator",
+      strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+      parameters = {
+        @Parameter(name = "sequence_name", value = "booking_sequence"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")
+        }
+    )
+	Long bookingId;
 
-	Integer roomId;
+	Long roomId;
 
-	Integer customerId;
+	Long customerId;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	LocalDate dateOfBooking;
 
-	public Integer getBookingId() {
+	public Long getBookingId() {
 		return bookingId;
 	}
 
-	public void setBookingId(Integer bookingId) {
+	public void setBookingId(Long bookingId) {
 		this.bookingId = bookingId;
 	}
 
-	public Integer getRoomId() {
+	public Long getRoomId() {
 		return roomId;
 	}
 
-	public void setRoomId(Integer roomId) {
+	public void setRoomId(Long roomId) {
 		this.roomId = roomId;
 	}
 
-	public Integer getCustomerId() {
+	public Long getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(Integer customerId) {
+	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
 	}
 

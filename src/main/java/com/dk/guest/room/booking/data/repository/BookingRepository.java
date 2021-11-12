@@ -7,10 +7,10 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.dk.guest.room.booking.data.model.Booking;
 
-public interface BookingRepository extends CrudRepository<Booking, Integer> {
+public interface BookingRepository extends CrudRepository<Booking, Long> {
 
-	Optional<Booking> findByRoomIdAndDateOfBooking(Integer roomId, LocalDate dateOfBooking);
+	Optional<Booking> findByRoomIdAndDateOfBooking(Long roomId, LocalDate dateOfBooking);
 
-	Iterable<Booking> findAllByRoomId(Integer id);
+	Iterable<Booking> findAllByRoomId(Long id);
 
 }

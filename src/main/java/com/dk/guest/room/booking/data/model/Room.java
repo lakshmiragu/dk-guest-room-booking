@@ -2,16 +2,27 @@ package com.dk.guest.room.booking.data.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 @Entity
 public class Room {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	Integer roomId;
-	Integer ownerId;
+    @GeneratedValue(generator = "sequence-generator")
+    @GenericGenerator(
+      name = "sequence-generator",
+      strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+      parameters = {
+        @Parameter(name = "sequence_name", value = "room_sequence"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")
+        }
+    )
+	Long roomId;
+	Long ownerId;
 	String name;
 	String floorSize;
 	String numberOfBeds;
@@ -21,19 +32,19 @@ public class Room {
 	Integer maxBookingPeriod;
 	Double rentPerDay;
 
-	public Integer getRoomId() {
+	public Long getRoomId() {
 		return roomId;
 	}
 
-	public void setRoomId(Integer roomId) {
+	public void setRoomId(Long roomId) {
 		this.roomId = roomId;
 	}
 
-	public Integer getOwnerId() {
+	public Long getOwnerId() {
 		return ownerId;
 	}
 
-	public void setOwnerId(Integer ownerId) {
+	public void setOwnerId(Long ownerId) {
 		this.ownerId = ownerId;
 	}
 

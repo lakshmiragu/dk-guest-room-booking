@@ -6,8 +6,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.dk.guest.room.booking.data.model.Account;
 
-public interface AccountRepository extends CrudRepository<Account, Integer> {
+public interface AccountRepository extends CrudRepository<Account, Long> {
 
-	Optional<Account> findByAccountIdAndType(Integer accountId, String type);
+	Optional<Account> findByAccountIdAndType(Long accountId, String type);
 
 }
