@@ -19,6 +19,10 @@ import com.dk.guest.room.booking.data.model.Booking;
 import com.dk.guest.room.booking.data.repository.AccountRepository;
 import com.dk.guest.room.booking.data.repository.BookingRepository;
 
+/*
+ * BookingController - process requests to create and view bookings
+ * 
+ */
 @RestController
 public class BookingController {
 	
@@ -49,6 +53,13 @@ public class BookingController {
 		return optional.get();
 	}
 
+	/*
+	 * createBookingRoom process POST request to create the booking room
+	 * 
+	 * id - booking id 
+	 * 
+	 * @return Booking - returns created booking with new booking id 
+	 */
 	@PostMapping("/bookings")
 	public Booking createBookingRoom(@RequestBody Booking booking) throws IOException {
 		logger.info("***Booking the room***");

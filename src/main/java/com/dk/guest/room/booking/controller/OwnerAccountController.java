@@ -24,55 +24,64 @@ import com.dk.guest.room.booking.data.repository.AccountRepository;
  */
 @RestController
 public class OwnerAccountController {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(OwnerAccountController.class);
 
-	
 	@Autowired
 	AccountRepository accountRepository;
-	
+
 	/*
 	 * viewAccount process GET request to view the details of a owner
 	 * 
-	 * id - owner id 
+	 * id - owner id
 	 * 
-	 * @return Account - details of the owner {id} 
+	 * @return Account - details of the owner {id}
 	 */
 	@GetMapping("/owners/{id}")
-	public Account viewAccount(@PathVariable Long id) throws IOException{
+	public Account viewAccount(@PathVariable Long id) throws IOException {
 		logger.info("Reading the Account id = " + id);
-		
+
 		Optional<Account> optional = accountRepository.findByAccountIdAndType(id, "owner");
-		if(optional.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Owner doesn't exist");
+		if (optional.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Owner doesn't exist");
 		}
 		return optional.get();
 	}
-	
+
+	/*
+	 * createAccount process POST request to create the owner
+	 * 
+	 * @return Account - returns created owner with new owner id 
+	 */
 	@PostMapping("/owners")
-	public Account createAccount(@RequestBody Account account) throws IOException{
+	public Account createAccount(@RequestBody Account account) throws IOException {
 		logger.info("***Creating the Account***");
-		if(account.getAccountId() != null) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Account Id should be empty to create an account");
+		if (account.getAccountId() != null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					"Account Id should be empty to create an account");
 		}
-		
-		if(account.getType() == null || !account.getType().equals("owner")) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Invalid type is given");
-		}
-		accountRepository.save(account);
-		return account;
-	}
-	
-	@PutMapping("/owners")
-	public Account updateAccount(@RequestBody Account account) throws IOException{
-		logger.info("***updating the Account***");
-		if(account.getAccountId() == null) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Account Id should be empty to update an existing account");
+
+		if (account.getType() == null || !account.getType().equals("owner")) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid type is given");
 		}
 		accountRepository.save(account);
 		return account;
 	}
 
-	
+	/*
+	 * updateAccount process PUT request to update the owner
+	 * 
+	 * @return Account - returns updated owner
+	 */
+	@PutMapping("/owners")
+	public Account updateAccount(@RequestBody Account account) throws IOException {
+		logger.info("***updating the Account***");
+		if (account.getAccountId() == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					"Account Id should be empty to update an existing account");
+		}
+		accountRepository.save(account);
+		return account;
+	}
 
 }

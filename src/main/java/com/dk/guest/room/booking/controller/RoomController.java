@@ -29,9 +29,13 @@ import com.dk.guest.room.booking.data.repository.AccountRepository;
 import com.dk.guest.room.booking.data.repository.BookingRepository;
 import com.dk.guest.room.booking.data.repository.RoomRepository;
 
+/*
+ * RoomController - process requests to create, view, update, delete rooms
+ * 
+ */
 @RestController
 public class RoomController {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(RoomController.class);
 
 	@Autowired
@@ -42,14 +46,13 @@ public class RoomController {
 
 	@Autowired
 	BookingRepository bookingRepository;
-	
-	
+
 	/*
 	 * viewRoomAvailability process GET request to view the availability of a room
 	 * 
-	 * @param id - room id 
+	 * @param id - room id
 	 * 
-	 * @return dateBooked - list of dates booked for the room {id} 
+	 * @return dateBooked - list of dates booked for the room {id}
 	 */
 	@GetMapping("/rooms/{id}/datesbooked")
 	public ArrayList<LocalDate> viewRoomAvailability(@PathVariable Long id) throws IOException {
@@ -67,13 +70,12 @@ public class RoomController {
 		return dateBooked;
 	}
 
-	
 	/*
 	 * viewRoom process GET request to view the details of a room
 	 * 
-	 * @param id - room id 
+	 * @param id - room id
 	 * 
-	 * @return Room - details of the room {id} 
+	 * @return Room - details of the room {id}
 	 */
 	@GetMapping("/rooms/{id}")
 	public Room viewRoom(@PathVariable Long id) throws IOException {
@@ -86,7 +88,6 @@ public class RoomController {
 		return optional.get();
 	}
 
-	
 	/*
 	 * viewAllRooms process GET request to view all rooms
 	 * 
@@ -98,9 +99,14 @@ public class RoomController {
 		return roomRepository.findAll();
 	}
 
+	/*
+	 * createRoom process POST request to create the room
+	 * 
+	 * @return Room - returns created room with new room id 
+	 */
 	@PostMapping("/rooms")
 	public Room createRoom(@RequestBody Room room) throws IOException {
-		logger.debug("***Creating the room***");
+		logger.info("***Creating the room***");
 		if (room.getRoomId() != null) {
 			logger.error("room should be empty ");
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room Id should be empty to create a room");
@@ -118,6 +124,11 @@ public class RoomController {
 		return room;
 	}
 
+	/*
+	 * updateRoom process PUT request to update the room
+	 * 
+	 * @return Room - returns updated room
+	 */
 	@PutMapping("/rooms")
 	public Room updateRoom(@RequestBody Room room) throws IOException {
 		logger.info("***updating the room***");
@@ -129,6 +140,11 @@ public class RoomController {
 		return room;
 	}
 
+	/*
+	 * deleteRoom process DELETE request to delete the room
+	 * 
+	 * @return void
+	 */
 	@DeleteMapping("/rooms/{id}")
 	public void deleteRoom(@PathVariable Long id) throws IOException {
 		logger.info("Deleting the Room id = " + id);
@@ -144,6 +160,11 @@ public class RoomController {
 	@Value("${file.upload-dir}")
 	public String fileUploadFolder;
 
+	/*
+	 * uploadFile process POST request to upload the file
+	 * 
+	 * @return void
+	 */
 	@PostMapping("/rooms/{id}/uploadphoto")
 	public void uploadFile(@RequestParam MultipartFile file, @PathVariable Long id)
 			throws IllegalStateException, IOException {
@@ -151,7 +172,7 @@ public class RoomController {
 		File newFile = new File(fileUploadFolder + id + ".jpg");
 
 		file.transferTo(newFile);
-		logger.info(newFile.getAbsolutePath());
+		logger.info("Photo Uploaded Successfully to :" + newFile.getAbsolutePath());
 
 	}
 
