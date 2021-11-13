@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,8 @@ import com.dk.guest.room.booking.data.repository.RoomRepository;
 
 @RestController
 public class RoomController {
+	
+	private static Logger logger = LoggerFactory.getLogger(RoomController.class);
 
 	@Autowired
 	RoomRepository roomRepository;
@@ -41,7 +45,7 @@ public class RoomController {
 
 	@GetMapping("/rooms/{id}/datesbooked")
 	public ArrayList<LocalDate> viewRoomAvailability(@PathVariable Long id) throws IOException {
-		System.out.println("Reading availablity of the Room id = " + id);
+		logger.info("Reading availablity of the Room id = " + id);
 		Iterable<Booking> bookings = bookingRepository.findAllByRoomId(id);
 
 		ArrayList<LocalDate> dateBooked = new ArrayList<>();
@@ -57,7 +61,7 @@ public class RoomController {
 
 	@GetMapping("/rooms/{id}")
 	public Room viewRoom(@PathVariable Long id) throws IOException {
-		System.out.println("Reading the Room id = " + id);
+		logger.info("Reading the Room id = " + id);
 
 		Optional<Room> optional = roomRepository.findById(id);
 		if (optional.isEmpty()) {
@@ -68,14 +72,15 @@ public class RoomController {
 
 	@GetMapping("/rooms")
 	public Iterable<Room> viewAllRooms() throws IOException {
-		System.out.println("Reading all rooms");
+		logger.info("Reading all rooms");
 		return roomRepository.findAll();
 	}
 
 	@PostMapping("/rooms")
 	public Room createRoom(@RequestBody Room room) throws IOException {
-		System.out.println("***Creating the room***");
+		logger.debug("***Creating the room***");
 		if (room.getRoomId() != null) {
+			logger.error("room should be empty ");
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room Id should be empty to create a room");
 		}
 		if (room.getOwnerId() == null) {
@@ -93,7 +98,7 @@ public class RoomController {
 
 	@PutMapping("/rooms")
 	public Room updateRoom(@RequestBody Room room) throws IOException {
-		System.out.println("***updating the room***");
+		logger.info("***updating the room***");
 		if (room.getRoomId() == null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
 					"Room Id should not be empty to update an existing room");
@@ -104,7 +109,7 @@ public class RoomController {
 
 	@DeleteMapping("/rooms/{id}")
 	public void deleteRoom(@PathVariable Long id) throws IOException {
-		System.out.println("Deleting the Room id = " + id);
+		logger.info("Deleting the Room id = " + id);
 
 		Optional<Room> optional = roomRepository.findById(id);
 		if (optional.isEmpty()) {
@@ -124,7 +129,7 @@ public class RoomController {
 		File newFile = new File(fileUploadFolder + id + ".jpg");
 
 		file.transferTo(newFile);
-		System.out.println(newFile.getAbsolutePath());
+		logger.info(newFile.getAbsolutePath());
 
 	}
 
