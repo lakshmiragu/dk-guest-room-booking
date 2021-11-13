@@ -18,7 +18,10 @@ import org.springframework.web.server.ResponseStatusException;
 import com.dk.guest.room.booking.data.model.Account;
 import com.dk.guest.room.booking.data.repository.AccountRepository;
 
-
+/*
+ * CustomerAccountController - process requests to create and view customers
+ * 
+ */
 @RestController
 public class CustomerAccountController {
 	
@@ -47,6 +50,11 @@ public class CustomerAccountController {
 		return optional.get();
 	}
 	
+	/*
+	 * createAccount process POST request to create the customer
+	 * 
+	 * @return Account -  returns created customer with new customer id 
+	 */
 	@PostMapping("/customers")
 	public Account createAccount(@RequestBody Account account) throws IOException{
 		logger.info("***Creating the Account***");
@@ -60,6 +68,11 @@ public class CustomerAccountController {
 		return account;
 	}
 	
+	/*
+	 * updateAccount process PUT request to update the customer
+	 * 
+	 * @return Account - returns updated customer 
+	 */
 	@PutMapping("/customers")
 	public Account updateAccount(@RequestBody Account account) throws IOException{
 		logger.info("***updating the Account***");
