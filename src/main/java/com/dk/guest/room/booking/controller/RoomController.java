@@ -42,7 +42,15 @@ public class RoomController {
 
 	@Autowired
 	BookingRepository bookingRepository;
-
+	
+	
+	/*
+	 * viewRoomAvailability process GET request to view the availability of a room
+	 * 
+	 * @param id - room id 
+	 * 
+	 * @return dateBooked - list of dates booked for the room {id} 
+	 */
 	@GetMapping("/rooms/{id}/datesbooked")
 	public ArrayList<LocalDate> viewRoomAvailability(@PathVariable Long id) throws IOException {
 		logger.info("Reading availablity of the Room id = " + id);
@@ -59,6 +67,14 @@ public class RoomController {
 		return dateBooked;
 	}
 
+	
+	/*
+	 * viewRoom process GET request to view the details of a room
+	 * 
+	 * @param id - room id 
+	 * 
+	 * @return Room - details of the room {id} 
+	 */
 	@GetMapping("/rooms/{id}")
 	public Room viewRoom(@PathVariable Long id) throws IOException {
 		logger.info("Reading the Room id = " + id);
@@ -70,6 +86,12 @@ public class RoomController {
 		return optional.get();
 	}
 
+	
+	/*
+	 * viewAllRooms process GET request to view all rooms
+	 * 
+	 * @return rooms - list of all rooms
+	 */
 	@GetMapping("/rooms")
 	public Iterable<Room> viewAllRooms() throws IOException {
 		logger.info("Reading all rooms");

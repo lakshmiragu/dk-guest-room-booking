@@ -28,6 +28,14 @@ public class CustomerAccountController {
 	@Autowired
 	AccountRepository accountRepository;
 	
+	
+	/*
+	 * viewAccount process GET request to view the details of a customer
+	 * 
+	 * id - customer id 
+	 * 
+	 * @return Account - details of the customer {id} 
+	 */
 	@GetMapping("/customers/{id}")
 	public Account viewAccount(@PathVariable Long id) throws IOException{
 		logger.info("Reading the Account id = " + id);
