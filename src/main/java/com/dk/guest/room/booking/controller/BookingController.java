@@ -31,6 +31,13 @@ public class BookingController {
 	@Autowired
 	AccountRepository accountRepository;
 
+	/*
+	 * viewBookingRoom process GET request to view the details of a booking
+	 * 
+	 * id - booking id 
+	 * 
+	 * @return Booking - details of the booking {id} 
+	 */
 	@GetMapping("/bookings/{id}")
 	public Booking viewBookingRoom(@PathVariable Long id) throws IOException {
 		logger.info("Reading the Booking Room id = " + id);

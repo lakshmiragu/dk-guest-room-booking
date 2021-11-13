@@ -18,7 +18,10 @@ import org.springframework.web.server.ResponseStatusException;
 import com.dk.guest.room.booking.data.model.Account;
 import com.dk.guest.room.booking.data.repository.AccountRepository;
 
-
+/*
+ * OwnerAccountController - process requests to create and view owners
+ * 
+ */
 @RestController
 public class OwnerAccountController {
 	
@@ -28,6 +31,13 @@ public class OwnerAccountController {
 	@Autowired
 	AccountRepository accountRepository;
 	
+	/*
+	 * viewAccount process GET request to view the details of a owner
+	 * 
+	 * id - owner id 
+	 * 
+	 * @return Account - details of the owner {id} 
+	 */
 	@GetMapping("/owners/{id}")
 	public Account viewAccount(@PathVariable Long id) throws IOException{
 		logger.info("Reading the Account id = " + id);
