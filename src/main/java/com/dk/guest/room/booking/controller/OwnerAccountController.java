@@ -3,6 +3,8 @@ package com.dk.guest.room.booking.controller;
 import java.io.IOException;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +22,15 @@ import com.dk.guest.room.booking.data.repository.AccountRepository;
 @RestController
 public class OwnerAccountController {
 	
+	private static Logger logger = LoggerFactory.getLogger(OwnerAccountController.class);
+
+	
 	@Autowired
 	AccountRepository accountRepository;
 	
 	@GetMapping("/owners/{id}")
 	public Account viewAccount(@PathVariable Long id) throws IOException{
-		System.out.println("Reading the Account id = " + id);
+		logger.info("Reading the Account id = " + id);
 		
 		Optional<Account> optional = accountRepository.findByAccountIdAndType(id, "owner");
 		if(optional.isEmpty()) {
@@ -36,7 +41,7 @@ public class OwnerAccountController {
 	
 	@PostMapping("/owners")
 	public Account createAccount(@RequestBody Account account) throws IOException{
-		System.out.println("***Creating the Account***");
+		logger.info("***Creating the Account***");
 		if(account.getAccountId() != null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Account Id should be empty to create an account");
 		}
@@ -50,7 +55,7 @@ public class OwnerAccountController {
 	
 	@PutMapping("/owners")
 	public Account updateAccount(@RequestBody Account account) throws IOException{
-		System.out.println("***updating the Account***");
+		logger.info("***updating the Account***");
 		if(account.getAccountId() == null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Account Id should be empty to update an existing account");
 		}

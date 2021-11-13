@@ -3,6 +3,8 @@ package com.dk.guest.room.booking.controller;
 import java.io.IOException;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,9 @@ import com.dk.guest.room.booking.data.repository.BookingRepository;
 
 @RestController
 public class BookingController {
+	
+	private static Logger logger = LoggerFactory.getLogger(BookingController.class);
+
 
 	@Autowired
 	BookingRepository bookingRepository;
@@ -28,7 +33,7 @@ public class BookingController {
 
 	@GetMapping("/bookings/{id}")
 	public Booking viewBookingRoom(@PathVariable Long id) throws IOException {
-		System.out.println("Reading the Booking Room id = " + id);
+		logger.info("Reading the Booking Room id = " + id);
 
 		Optional<Booking> optional = bookingRepository.findById(id);
 		if (optional.isEmpty()) {
@@ -39,8 +44,8 @@ public class BookingController {
 
 	@PostMapping("/bookings")
 	public Booking createBookingRoom(@RequestBody Booking booking) throws IOException {
-		System.out.println("***Booking the room***");
-		System.out.println(booking);
+		logger.info("***Booking the room***");
+		logger.info(booking.toString());
 
 		if (booking.getBookingId() != null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Booking Id should be empty to booking a room");
