@@ -14,8 +14,10 @@ CREATE TABLE 'booking' (
   'customer_id' bigint DEFAULT NULL,
   'date_of_booking' date DEFAULT NULL,
   'room_id' bigint DEFAULT NULL,
-  PRIMARY KEY ('booking_id')
+  PRIMARY KEY ('booking_id'),
+  UNIQUE KEY 'UniqueRoomIdAndDateOfBooking' ('room_id','date_of_booking')
 ) ;
+
 
 CREATE TABLE 'room' (
   'room_id' bigint NOT NULL,
