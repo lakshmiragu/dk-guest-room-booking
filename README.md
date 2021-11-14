@@ -20,6 +20,10 @@ MySQL 8 Database
  	As the property spring.jpa.hibernate.ddl-auto=update is configured in application.properties,
  	tables and sequences get created during application startup.
  	
+ 	alternatively, open a command prompt and execute the following command to start/run the appliation
+ 	mvnw spring-boot:run
+
+ 	
  3. Import following file into Postman.
   /dk-guest-room-booking/postman/GuestRoomBookingApplication.postman_collection.json 	
   
