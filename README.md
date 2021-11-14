@@ -2,14 +2,7 @@
  Guest Room Booking Application
 
 Techonologies and Tools used:
-Java 8
-SpringBoot 2.5.2
-Spring FrameWork
-MySQL 8 Database
-
- Spring Tool Suite IDE / Eclipse
- MySQL Workbench 
- Postman
+Java 8, SpringBoot 2.5.2, Spring FrameWork, MySQL 8 Database, Spring Tool Suite IDE / Eclipse, MySQL Workbench, Postman
 
  1. create database schema in MySql
  	CREATE SCHEMA 'guest_room_booking_schema' ;
