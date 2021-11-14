@@ -3,11 +3,13 @@
 
 Techonologies and Tools used:
 Java 8
-MySQL 8
+SpringBoot 2.5.2
 Spring FrameWork
-Spring Tool Suite IDE
-Postman
-MySQL Workbench
+MySQL 8 Database
+
+ Spring Tool Suite IDE / Eclipse
+ MySQL Workbench 
+ Postman
 
  1. create database schema in MySql
  	CREATE SCHEMA 'guest_room_booking_schema' ;
@@ -39,13 +41,13 @@ By submitting above requests one by one from Postman would
 Note:
 Following endpoints are available:
 1. Create Owner
-PUT: http://localhost:8080/owners
+POST: http://localhost:8080/owners
 
 2. View Owner
 GET: http://localhost:8080/owners/{id}
 
 3. Create Customer
-PUT: http://localhost:8080/customers
+POST: http://localhost:8080/customers
 
 4. View Customer
 GET: http://localhost:8080/customers/{id}

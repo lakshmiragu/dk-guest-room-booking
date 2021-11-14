@@ -102,7 +102,7 @@ public class RoomController {
 	/*
 	 * createRoom process POST request to create the room
 	 * 
-	 * @return Room - returns created room with new room id 
+	 * @return Room - returns created room with new room id
 	 */
 	@PostMapping("/rooms")
 	public Room createRoom(@RequestBody Room room) throws IOException {
@@ -169,7 +169,11 @@ public class RoomController {
 	public void uploadFile(@RequestParam MultipartFile file, @PathVariable Long id)
 			throws IllegalStateException, IOException {
 
-		File newFile = new File(fileUploadFolder + id + ".jpg");
+		File uploadDir = new File(fileUploadFolder);
+		if(!uploadDir.exists()) {
+			uploadDir.mkdirs();
+		}
+		File newFile = new File(fileUploadFolder + "/room-" + id + ".jpg");
 
 		file.transferTo(newFile);
 		logger.info("Photo Uploaded Successfully to :" + newFile.getAbsolutePath());
