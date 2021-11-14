@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -12,6 +14,7 @@ import org.hibernate.annotations.Parameter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(name = "UniqueRoomIdAndDateOfBooking", columnNames = { "roomId", "dateOfBooking" }) })
 public class Booking {
 
 	@Id

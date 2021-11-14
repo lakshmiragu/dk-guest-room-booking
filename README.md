@@ -13,7 +13,8 @@ MySQL 8 Database
 
  1. create database schema in MySql
  	CREATE SCHEMA 'guest_room_booking_schema' ;
- 	(Note: please refer to /dk-guest-room-booking/sql-script/guest_room_booking.sql)
+ 	(Note: please refer to /dk-guest-room-booking/sql/guest_room_booking_script.sql)
+ 	( Sample data can be found in /dk-guest-room-booking/sql/sample-data
  	
  2. Start dk-guest-room-booking application as a SpringBoot App
  	As the property spring.jpa.hibernate.ddl-auto=update is configured in application.properties,

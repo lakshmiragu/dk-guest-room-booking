@@ -1,0 +1,2 @@
+room_id,address,amenities,floor_size,max_booking_period,min_booking_period,name,number_of_beds,owner_id,rent_per_day
+1,"234, Main Street, Thanjavur","AC,Water heater","200 Sq.ft",30,1,guest-room-7,1,1,1000
