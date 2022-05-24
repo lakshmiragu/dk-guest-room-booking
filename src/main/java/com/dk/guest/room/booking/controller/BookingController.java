@@ -78,9 +78,12 @@ public class BookingController {
 		if (optionalAccount.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer doesn't exist");
 		}
+		
 
 		Optional<Booking> optionalBooking = bookingRepository.findByRoomIdAndDateOfBooking(booking.getRoomId(),
 				booking.getDateOfBooking());
+		
+		
 		if (optionalBooking.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room already booked for the date asked");
 		}
@@ -90,5 +93,14 @@ public class BookingController {
 
 		return booking;
 	}
+	
+//	public static void main(String[] args) {
+//		
+//		LocalDate dateOfBooking = LocalDate.of(2021, 10, 1);
+//		
+//		LocalDate now = LocalDate.now();
+//		System.out.println(dateOfBooking.isBefore(now));
+//
+//	}
 
 }
