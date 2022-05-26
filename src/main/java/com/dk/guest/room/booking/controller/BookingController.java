@@ -25,9 +25,8 @@ import com.dk.guest.room.booking.data.repository.BookingRepository;
  */
 @RestController
 public class BookingController {
-	
-	private static Logger logger = LoggerFactory.getLogger(BookingController.class);
 
+	private static Logger logger = LoggerFactory.getLogger(BookingController.class);
 
 	@Autowired
 	BookingRepository bookingRepository;
@@ -38,9 +37,9 @@ public class BookingController {
 	/*
 	 * viewBookingRoom process GET request to view the details of a booking
 	 * 
-	 * id - booking id 
+	 * id - booking id
 	 * 
-	 * @return Booking - details of the booking {id} 
+	 * @return Booking - details of the booking {id}
 	 */
 	@GetMapping("/bookings/{id}")
 	public Booking viewBookingRoom(@PathVariable Long id) throws IOException {
@@ -56,9 +55,9 @@ public class BookingController {
 	/*
 	 * createBookingRoom process POST request to create the booking room
 	 * 
-	 * id - booking id 
+	 * id - booking id
 	 * 
-	 * @return Booking - returns created booking with new booking id 
+	 * @return Booking - returns created booking with new booking id
 	 */
 	@PostMapping("/bookings")
 	public Booking createBookingRoom(@RequestBody Booking booking) throws IOException {
@@ -78,12 +77,10 @@ public class BookingController {
 		if (optionalAccount.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer doesn't exist");
 		}
-		
 
 		Optional<Booking> optionalBooking = bookingRepository.findByRoomIdAndDateOfBooking(booking.getRoomId(),
 				booking.getDateOfBooking());
-		
-		
+
 		if (optionalBooking.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room already booked for the date asked");
 		}
@@ -93,14 +90,5 @@ public class BookingController {
 
 		return booking;
 	}
-	
-//	public static void main(String[] args) {
-//		
-//		LocalDate dateOfBooking = LocalDate.of(2021, 10, 1);
-//		
-//		LocalDate now = LocalDate.now();
-//		System.out.println(dateOfBooking.isBefore(now));
-//
-//	}
 
 }
