@@ -2,7 +2,7 @@ CREATE SCHEMA 'guest_room_booking_schema' ;
 
 CREATE TABLE 'account' (
   account_id bigint NOT NULL,
-  'email' varchar(255) DEFAULT NULL,
+  email varchar(255) DEFAULT NULL,
   'full_name' varchar(255) DEFAULT NULL,
   'mobile_number' varchar(255) DEFAULT NULL,
   'type' varchar(255) DEFAULT NULL,
